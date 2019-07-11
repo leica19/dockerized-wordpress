@@ -1,0 +1,30 @@
+
+version: '2'
+services:
+  volume:
+    image: busybox
+    container_name: live-api-volume
+    volumes:
+      - ./db/data:/var/lib/mysql
+  db:
+    image: mysql
+    container_name: wordpress-db
+    expose:
+      - "3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root # rootパスワードの設定
+    volumes_from:
+      - volume
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db/data:/var/lib/mysql
+  app:
+    image: wordpress
+    container_name: wordpress-app
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
