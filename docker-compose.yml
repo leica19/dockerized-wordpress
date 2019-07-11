@@ -3,7 +3,7 @@ version: '2'
 services:
   volume:
     image: busybox
-    container_name: live-api-volume
+    container_name: wordpress-volume
     volumes:
       - ./db/data:/var/lib/mysql
   db:
